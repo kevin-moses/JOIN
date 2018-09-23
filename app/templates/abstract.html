@@ -1,0 +1,30 @@
+<!--basic second webpage branched off of home-->
+{% extends "layout.html" %}
+
+<!-- Title -->
+{% block title %} About - JOIN {% endblock %}
+
+{% block content %}
+
+<div class="container py-2">
+    <div class="row py-5">
+        <h1 class="display-4">JOIN: The Journal of Interactive Notebooks
+            </h1>
+        <h4  class="medium py-3">Kevin Moses<sup>1, 3</sup>, Denis Torre<sup>2, 3</sup>, Avi Ma’ayan<sup>2, 3</sup>
+            </h4>
+        <p class="small light"><sup>1</sup>BD2K-LINCS DCIC Summer Research Training Program in Biomedical Big Data Science, <sup>2</sup>BD2K-LINCS Data Coordination and Integration Center, <sup>3</sup>Mount Sinai Center for Bioinformatics and the Department of Pharmacological Sciences, Icahn School of Medicine at Mount Sinai, New York, NY
+        </p>
+    </div>
+    <div class="row py-3">
+        <p style="margin-left: 3em"> Interactive notebooks are powerful tools that can be used for implementing reproducible research, enabling the reuse of computational analysis methods and encouraging collaborations. While the volume of interactive notebooks has been steadily increasing, there are currently few efforts to collate, review and publish these notebooks as bona fide publications. 
+                <br> </br>
+                Here we introduce the Journal of Interactive Notebooks (JOIN), an online repository for curated interactive Notebook publications combining traditional print and online biomedical research press with interactive notebooks. JOIN notebooks require authors, an abstract, references, and methods, as well as meet strict FAIR guidelines. The notebook offers machine-readable code, interactive figures, and markup text. Each notebook can be launched interactively in the cloud using Binder, or can be statically read with nbViewer. 
+                <br></br>
+                Notebooks in JOIN are clustered into themed Collections based on common keywords. Soon authors will be able to submit their own notebooks for publication in JOIN and these publications will be minted with CrossRef DOIs upon acceptance. JOIN is accessible from: <a href="http://thejoin.cloud">http://thejoin.cloud</a>.
+
+                <br></br>
+                
+                </p>
+    </div>
+</div>  
+{% endblock content %}

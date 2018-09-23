@@ -1,0 +1,111 @@
+<!--basic second webpage branched off of home-->
+{% extends "layout.html" %}
+
+<!-- Title -->
+{% block title %} Upload - JOIN{% endblock %}
+
+{% block content %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+
+<!DOCTYPE html>
+<div class="container py-5">
+    <div class="card w-75 py-2 bg-navy">
+        <div class="card-body">
+            <h5 class="card-title light white">Submit your notebook here!</h5>
+            <p class="card-text light white">Please review our <a href="{{url_for('submission_guidelines')}}" class="pink"> <b>submission guidelines</b> </a> before uploading.</p>
+
+        </div>
+    </div>
+    <div id="test1"></div>
+
+
+
+    <!-- Full Upload Form  -->
+    <form  class="form-horizontal py-3" action="{{url_for('upload')}}"  method="POST" autocomplete="on"  >
+
+        <!-- URL Title  -->
+        <div class="form-group">
+            <label class="control-label" for="inputtitle">
+                Title
+            </label>
+                <div class="controls">
+                    <input type="text" id="title" placeholder="title" name="title" value="test" >
+                </div>
+        </div>
+
+        <!-- URL Submit  -->
+        <div class="form-group">
+            <label class="control-label" for="inputURL">
+                URL
+            </label>
+                <div class="controls">
+                    <input type="text" id="url" placeholder="url" name="url" value="test">
+                </div>
+        </div>
+
+        <!-- Abstract Submit  -->
+        <div class="form-group" id="abstract-group">
+            <label class="control-label" for="inputabstract">Abstract</label>
+                <div class="controls">
+                    <textarea name="abstract" id="abstract" cols="30" rows="10"value="test"></textarea>                    
+                </div>
+        </div>
+
+         <!-- Keyword Submit -->
+        <div class="form-group" id="tag">
+            <label for="inputKeyword" class="control-label">Tags (separate with a comma)</label>
+            <br>
+                <div class="tags-input" data-name="tags-input" placeholder="tags" value="test">
+                </div>
+        </div> 
+       
+        <!-- Author Submit  -->
+        <div class="form-group author-group" id="author-group">
+                <label class="control-label" for="inputAuthor">Author</label>
+                    <div class="controls">
+                        <!-- First name, last name  -->
+                        <input type="text" id="name" placeholder="name" name="author-1" value="test"/>
+                        <!-- Add and remove button  -->
+                        <input type='button' class="btn btn-success" value='+' id='addAuthor' />
+                        <input type='button' class="btn btn-danger " value='-' id='removeAuthor' />             
+                    </div>
+        </div>
+
+        <button type="submit" class="btn btn-success" value="Submit">Submit</button>
+    </form>
+</div>
+
+
+
+<script src="{{url_for('static', filename='js/tags.js')}}"></script>
+
+<!-- Custom js add button script  -->
+<script type="text/javascript">
+$(document).ready(function () {
+ 
+//  Add Author (+) Function
+$("#addAuthor").click(function () {
+
+    var id = ($('.author-group').length +1 ).toString();
+    // appends to LAST generated author, with same form.
+    $('.author-group:last').append('<div class="form-group author-group" id="author-group' + id + '">   <label class="control-label" for="inputAuthor' + id + '">Author '  + id + '</label><div class="controls'   + id + '"><input type="text" id="name'  + id + '" placeholder="name" name="author-'  + id + '"></div></div>');
+});
+
+//  Remove Author (-) Function
+$("#removeAuthor").click(function () {
+    // Can't remove to 0
+    if ($('.author-group').length == 1) {
+        alert("No more textbox to remove");
+        return false;
+    }
+    $(".form-group .author-group:last").remove();
+});
+
+});
+
+</script>
+
+</body>
+</html>  
+{% endblock content %}

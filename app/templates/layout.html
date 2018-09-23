@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <!--install boostrap, initialize-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB"
+        crossorigin="anonymous">
+
+    <!-- Font Awesome - share icons  -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+
+    <!-- Icon  -->
+    <link rel="icon" type="image/png" href="{{url_for('static', filename='img/ms-icon-144x144.png')}}" sizes="32x32" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="animate.css"/>
+    <!-- My main CSS file  -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit = no">
+    <script src="main.js"></script>
+
+    <!--Titles-->
+    <title> {% block title %} {% endblock %} </title>
+</head>
+
+<!--navigation bar-->
+<nav class="navbar navbar-expand-lg sticky-top navbar-light bg-navbar">
+    <a class="navbar-brand" href="{{url_for('home')}}">
+        <img style="max-width: 100px;" src="{{ url_for('static', filename='img/Logo.png') }} "> Journal of Interactive Notebooks
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbarNavDropdown" class="navbar-collapse collapse">
+
+
+        <ul class=" navbar navbar-nav ml-auto">
+
+            <!-- collections button  -->
+            <li class="nav-item active">
+                <a class="nav-link futura px-3 " href="{{url_for('collections')}}">Collections</a>
+            </li>
+
+            <!-- Notebooks button  -->
+            <li class="nav-item ">
+                <a class="nav-link futura px-3 " href="{{url_for('notebooks')}}">Notebooks</a>
+            </li>
+            <!-- Dropdown submit button  -->
+            <!-- <li class="nav-item dropdown">
+            <a class="nav-link futura px-3  dropdown-toggle" href="upload" id="dLabel" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Submit
+            </a>
+                <div class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                <a class="dropdown-item" href="{{url_for('submission_guidelines')}}">Submission Guidelines</a>
+                <a class="dropdown-item" href="{{url_for('upload')}}">Upload</a>
+                </div>
+            </li> -->
+            <!-- Abstract button  -->
+            <li class="nav-item">
+                <a class="nav-link futura px-3 " href="{{url_for('abstract')}}">Abstract</a>
+            </li>
+            <!-- Alerts button - do we need this? -->
+            <!-- <li class="nav-item">
+                <a class="nav-link futura px-3 " href="/">Alerts</a>
+            </li> -->
+        </ul>
+    </div>
+</nav>
+{% block content %}{% endblock %}
+
+
+<!-- Footer -->
+<footer class="footer bg-white">
+    <div class="container pt-4 pb-3">
+        <div class="row px-3">
+
+            <!-- Affiliations  -->
+            <div class="col-4">
+                <div class="very-px-3 mb-1">Affiliations</div>
+                <div class="micro light">
+                    <div>
+                        <a class="black" href="http://icahn.mssm.edu/research/labs/maayan-laboratory" target="_blank">The Ma'ayan Lab</a>
+                    </div>
+                    <div>
+                        <a class="black" href="https://nihdatacommons.us/" target="_blank">NIH Data Commons Pilot Project Consortium (DCPPC)</a>
+                    </div>
+                    <div>
+                        <a class="black" href="http://www.lincs-dcic.org/" target="_blank">BD2K-LINCS Data Coordination and Integration Center (DCIC)</a>
+                    </div>
+                    <div>
+                        <a class="black" href="http://icahn.mssm.edu/" target="_blank">Icahn School of Medicine at Mount Sinai</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Share -->
+            <div class="col-4">
+                <div class="very-px-3 mb-1">Share</div>
+                <div class="row px-3">
+                    <!-- Twitter -->
+                    <a href="http://twitter.com/share?url=https://amp.pharm.mssm.edu/join/&text=JOIN: The Journal of Interactive Notebooks&via=JOIN" target="_blank" >
+                        <i class="fab fa-2x px-3 py-3   fa-twitter twitter"></i>
+                    </a>
+                    <!-- Google Plus -->
+                    <a href="https://plus.google.com/share?url=https://amp.pharm.mssm.edu/join/" target="_blank" >
+                        <i class="fab fa-2x  px-3 py-3 fa-google-plus google-plus"></i>
+                    </a>
+                    <!-- Facebook -->
+                    <a href="http://www.facebook.com/sharer/sharer.php?u=https://amp.pharm.mssm.edu/join/" target="_blank" >
+                        <i class="fab fa-2x px-3 py-3 fa-facebook-f facebook"></i>
+                    </a>
+                </div>
+                <div class="row px-3">
+                    <!-- Reddit (url, title) -->
+                    <a href="http://reddit.com/submit?url=https://amp.pharm.mssm.edu/join/&title=JOIN: The Journal of Interactive Notebooks" target="_blank" >
+                        <i class="fab fa-2x px-3 py-3 fa-reddit reddit "></i>
+                    </a>
+                    <!-- LinkedIn -->
+                    <a href="http://www.linkedin.com/shareArticle?url=https://amp.pharm.mssm.edu/join/&title=JOIN: The Journal of Interactive Notebooks&source=https://amp.pharm.mssm.edu/join/" target="_blank"
+                        >
+                        <i class="fab fa-2x px-3 py-3 fa-linkedin linkedin"></i>
+                    </a>
+                    <!-- Email -->
+                    <a href="mailto:?subject=<SUBJECT&body=<BODY>" target="_blank" >
+                        <i class="far fa-2x px-3 py-3 fa-envelope envelope"></i>
+                    </a>
+                </div>
+            </div>
+
+
+            <!-- Logo -->
+            <div class="col-3 px-5 my-auto ">
+                <a href="http://icahn.mssm.edu/research/bioinformatics" target="_blank">
+                    <img src="https://amp.pharm.mssm.edu/archs4/images/mountsinai.png" class="w-100 px-3 ">
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+
+<!-- fading dropdown menu  -->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.dropdown-toggle').click(function () {
+            $(this).next('.dropdown-menu').fadeToggle(1000);
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
+
+</html>
+
+<!-- Check out the new logo that I created on <a href="http://logomakr.com" title="Logo Makr">LogoMakr.com</a> https://logomakr.com/7p7Q0k -->

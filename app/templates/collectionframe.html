@@ -1,0 +1,116 @@
+<!-- Import Macros -->
+{% from "macros.html" import binder_button with context %}
+{% from "macros.html" import git_button with context %}
+{% from "macros.html" import nb_button with context %}
+{% from "macros.html" import tag_list with context %}
+
+
+{% extends "layout.html" %} 
+
+<!-- Title -->
+{% block title %} {% for i in collections %}
+  Collection No.{{i['collection']}} - JOIN  
+{% endfor %} {% endblock %}
+
+{% block content %} 
+{%for i in collections%}
+<!-- Top titles -->
+<div class="container-fluid bg-purple my-0 py-0 headings">
+  <div class="jumbotron bg-purple ">
+      <h3 class="display-4 white small my-0 py-0 futura"> Collection No.{{i['collection']}}
+
+      <h3 class="display-4  animate-opacity pb-0 mb-0 text-warning very-large futura bold">{{i['title']}}</h3>
+  </div>
+</div>
+<div class="container " id- "lower">
+  <div class="row pb-5">
+
+    <!-- Notebooks -->
+    <div class="col-7 rounded animate-opacity-2 order-2 order-lg-1">
+      <!-- Heading -->
+      <h3 class="display-4 large py-3  futura" style="text-align: center">Selected Notebooks </h3>
+      {% for n in notebooks %}
+      <hr>
+      <div class="row small shrinked  " data-container="body" data-toggle="popover" data-placement="left" data-trigger="hover"
+        title="Notebook Description" data-content="{{n['abstract']}}">
+        <!-- list of notebooks  -->
+        <div class=" col-12">
+          <small>
+
+            <!-- Title  -->
+            <h5>
+              <a class="navy small" href="{{url_for('book', key = n['id'])}}">{{n['title']}}</a>
+            </h5>
+          </small>
+
+          <!-- Content under each title  -->
+          <p class=" navy tiny"> Notebook Generator(s): {{n['author_names']}} </p>
+
+          <!-- Launch buttons  -->
+          <div class="row mb-3 ">
+
+            <!-- Binder -->
+            {{binder_button(n['binder_url'])}}
+            <!-- Static -->
+            {{nb_button(n['url'])}}
+            <!-- Github -->
+            {{ git_button(n['github_url']) }}
+          </div>
+
+          <!-- Keyword List -->
+          {{ tag_list(tags, n['id']) }}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Description  + Share-->
+    <div class="col-5 px-5  rounded order-1 order-lg-2">
+      <div class="card bg-peach animate-opacity-2 border-warning">
+        <div class="card-body">
+          <p class="navy mini"> {{i['description']}}</p>
+          <!-- Binder and Github Buttons  -->
+          <a href="{{i['binder_url']}}" target="_blank" class="btn btn-warning hvr-icon-float-away  btn-block ">
+            <i class="fas fa-rocket hvr-icon"></i>&nbsp;&nbsp;&nbsp;Launch this Collection with Binder</a>
+          <a href="{{i['github_url']}}" target="_blank" class="btn btn-dark btn-block hvr-icon-bob">
+            <i class="fab fa-github hvr-icon"></i>&nbsp;&nbsp;&nbsp;View this Collection on Github </a>
+
+        </div>
+      </div>
+        <!-- share icons -->
+        <br>
+        <div class="card">
+            <h5 class="card-header bg-rose light pt-3" style="text-align: center">Share this Collection:</h5>
+            <div class="card-body">
+                <!-- Twitter -->
+                <a href="http://twitter.com/share?url={{page}}&text={{i['title']}}
+                                            &via=JOIN" target="_blank">
+                    <i class="fab fa-2x fa-twitter twitter"></i>
+                </a>
+
+                <!-- Google Plus -->
+                <a href="https://plus.google.com/share?url={{page}}" target="_blank" class="share-btn px-4 ml-3 google-plus">
+                    <i class="fab fa-2x fa-google-plus"></i>
+                </a>
+                <!-- Facebook -->
+                <a href="http://www.facebook.com/sharer/sharer.php?u={{page}}" target="_blank" class="share-btn px-4 ml-3 facebook">
+                    <i class="fab fa-2x fa-facebook-f"></i>
+                </a>
+                <!-- Email -->
+                <a href="mailto:?subject={{i['title']}}&body={{i['abstract']}}"
+                    target="_blank" class="share-btn px-4 ml-3 email">
+                    <i class="far fa-2x fa-envelope"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+  </div>
+</div>
+
+  {% endfor %}
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="{{url_for('static', filename='js/scripts.js')}}"></script> {% endblock content %}

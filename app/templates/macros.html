@@ -1,0 +1,130 @@
+<!-- ###############################################  -->
+<!-- ##### Binder_button############################  -->
+<!-- ###############################################  -->
+<!-- ### Displays button to launch binder image. 
+<!-- ### Used in: notebooks(), collection_frame(), search_data(). -->
+{% macro binder_button(url) %}
+{% if (url) %}
+<div class="col-lg-4">
+    <a href="{{ url }}" target="_blank" class="btn btn-warning   black hvr-icon-float-away  ">
+        <i class="fas fa-rocket hvr-icon"></i>&nbsp;&nbsp;&nbsp;Launch with Binder </a>
+</div>
+{% endif %}
+{% endmacro %}
+
+
+<!-- ###############################################  -->
+<!-- ##### nb_button################################  -->
+<!-- ###############################################  -->
+<!-- ### Displays button to launch nvbiewer. 
+<!-- ### Used in: notebooks(), collection_frame(), search_data(). -->
+
+{% macro nb_button(url) %}
+
+<div class="col-lg-4 ">
+    <a href="{{url}}" target="_blank" class="btn btn-success hvr-icon-forward  ">
+        <i class="fas fa-book hvr-icon"></i>&nbsp;&nbsp;&nbsp;Read with nbviewer</a>
+</div>
+{% endmacro %}
+
+
+<!-- ###############################################  -->
+<!-- ##### Github_button############################  -->
+<!-- ###############################################  -->
+<!-- ### Displays button to launch binder image. 
+<!-- ### Used in: notebooks(), collection_frame(), search_data(). -->
+{% macro git_button(url) %}
+{% if url %}
+<div class="col-lg-4">
+    <a href="{{url}}" target="_blank" class="btn btn-dark  hvr-icon-bob">
+        <i class="fab fa-github hvr-icon">&nbsp;&nbsp;&nbsp; </i>View on Github </a>
+</div>
+{% endif %}
+{% endmacro %}
+
+<!-- ###############################################  -->
+<!-- ####  tag_list ################################  -->
+<!-- ###############################################  -->
+<!-- ### Displays list of tags with colors.
+<!-- ### Used in: notebooks(), collection_frame(), search_data(). -->
+{% macro tag_list(tags, notebook_id) %} 
+<p class="mt-auto   mb-0 tiny extra-bold purple"> KEYWORDS:&nbsp;
+    {% for t in tags %}
+    {% if t['notebook_id'] == notebook_id %}
+   <span class="badge  badge-pill hvr-float nowrap" style="background-color: {{t['color']}}">
+       <a class="tiny light white   " href="{{url_for('subject', key = t['keyword'])}}">{{t['keyword']}}</a>
+   </span>
+   {% endif %} 
+   {% endfor %} 
+</p>
+{% endmacro %}
+
+
+<!-- ###############################################  -->
+<!-- ####  sidebar #################################  -->
+<!-- ###############################################  -->
+<!-- ### Displays list of top used tags
+<!-- ### Used in: notebooks(), nb_frame(), search_data(). -->
+{% macro sidebar(top_tags) %}
+<div class="col-3">
+    <div class="panel rounded py-3">
+        <h4 class="medium px-sm-3 extra-bold purple mb-0" style="text-align: center"> Top Tags </h4>
+        {% for t in top_tags %}
+        <br>
+        <a href="{{url_for('subject', key = t['keyword']) }}" class="badge badge-pill tag-text mx-sm-4 px-sm-auto my-1 hvr-backward" style="border:2px solid {{t['color']}}">{{t['keyword']}}</a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endmacro %}
+
+
+<!-- ###############################################  -->
+<!-- ####  collection_tag #################################  -->
+<!-- ###############################################  -->
+<!-- ### Displays what collection the notebook is in.
+<!-- ### Used in: notebooks(), keyframe(), search_data(). -->
+{% macro collection_tag(n) %}
+<!-- collection # -->
+{% if n['collection_id_fk'] == n['collection_id_fk'] %}
+<a class="btn btn-sm bg-navy white" href="{{url_for('collection_template', key = n['collection_id_fk'])}}">
+    Collection No.{{ int(n['collection_id_fk']) }}
+</a>  
+<br>
+</br>
+{% endif %}
+{% endmacro %}
+
+
+<!-- ###############################################  -->
+<!-- ####  display_notebooks #################################  -->
+<!-- ###############################################  -->
+<!-- ### Displays a list of notebooks
+<!-- ### Used in: home(), collectionframe() -->
+{% macro display_notebooks(notebooks) %}
+{% for n in notebooks %}
+<div class="rounded row small"   data-container = "body" data-toggle="popover" data-placement = "left" data-trigger = "hover" title="Notebook Description"  data-content="{{n['abstract']}}" >
+  
+  <!-- list of notebooks  -->
+  <div class=" col-11 hvr-fade ml-5 py-3 pl-5">     
+      <!-- Title  -->
+      <h5> <a class="navy small" href="{{url_for('book', key = n['id'])}}">{{n['title']}}</a> </h5>
+
+    <!-- Content under each title  -->
+    <p class="navy tiny"> Notebook Generator(s): {{n['author_names']}} </p>
+      <div class="row mb-3">
+        <!-- Binder -->
+        {{ binder_button(n['binder_url']) }}
+        <!-- nbviewer -->
+        {{ nb_button(n['url']) }}
+        <!-- github -->
+        {{ git_button(n['github_url']) }}
+      </div>
+          {{tag_list(tags, n['id'])}}
+
+      <hr class="tab">
+     
+  </div>   
+</div>
+{% endfor %}
+{% endmacro %}

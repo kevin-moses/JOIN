@@ -1,0 +1,44 @@
+<!-- Macros  --> 
+{% from "macros.html" import tag_list with context %} 
+{% from "macros.html" import sidebar with context %}
+{% from "macros.html" import display_notebooks with context %}
+
+{% extends "layout.html" %}
+
+<!-- Title -->
+{% block title %}
+{{''.join(keyword)}} - JOIN
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5 headings">
+  
+  <!-- All notebooks heading  -->
+  <div class="row">
+    <h1 class="navy">Keyword: {{''.join(keyword)}}</h1>
+  </div>
+  
+  <!-- Pink line -->
+  <hr class="hr">
+</div>
+
+<!-- Container for list of notebooks, as well as sidebar  -->
+<div class="container" >
+
+  <!-- List of Notebooks  -->
+  <div class="row">
+    <div class="col-9">
+      {{ display_notebooks(notebooks) }}
+    </div>
+
+    <!-- Sidebar  -->
+    {{ sidebar(top_tags) }}
+  </div>
+</div>
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  
+{% endblock content %}

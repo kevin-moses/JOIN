@@ -1,0 +1,92 @@
+{% extends "layout.html" %}
+
+
+<!-- Title -->
+{% block title %} Collections - JOIN {% endblock %}
+{% block content %}
+<body class="bg-navy">
+  
+</body>
+
+<div class="container py-5 headings">
+  
+  <!-- collections heading  -->
+<h1 class="white" style="text-align: center;">Collections</h1>
+  
+  <!-- Pink line -->
+  <hr class="hr">
+</div>
+
+<!-- Container for list of collections, as well as sidebar  -->
+<div class="container" >
+
+  <!-- List of collections  -->
+  <div class="row">
+      {% for i in collections %}
+      <div class="row  py-4 "   data-container = "body">
+        <div class=" col-12 ">     
+          
+          <!-- Each collection displayed as a card  -->
+          <div class="card animate-opacity " id="collection" style="width: 100%;">
+            <div class="card-body">
+
+              <!-- Content under each title  -->
+              <div class="row">
+
+                <!-- Left column of panel: collection number, date, title, binder link  -->
+                  <div class="col-5">
+                      <h2><a class="display-4 purple medium-large futura extra-bold " href="{{url_for('collection_template', key = i['collection'] )}}" >Collection No.{{i['collection']}}</a> </h2> 
+                      <h5 class="text-muted  micro card-subtitle mt-2"> Published {{i['date_posted']}}</h5>
+                      <p class="text-muted micro purple">Notebooks featured in Collection: {{i['notebook_count']}}</p>
+                      <p class="card-text py-2 "> <a class="purple bold large" href="{{url_for('collection_template', key = i['collection'] )}}"> {{i['title']}}  </a></p>
+                  </div>
+
+                  <!-- Right column of panel: description  -->
+                  <div class="col-7 ">
+                        <p class="card-text  mini ">{{i['description']}} </p>
+                  </div>
+              </div>
+              <br>
+              <!-- Buttons: Binder and Github -->
+              <div class="row">
+                <div class="col-6">
+                  <a href="{{i['binder_url']}}" target="_blank" class="btn btn-warning btn-block hvr-icon-float-away">
+                    <i class="fas fa-rocket hvr-icon"></i>&nbsp;&nbsp;&nbsp;Launch this Collection with Binder</a>
+                </div>
+
+                <div class="col-6">
+                  <a href="{{i['github_url']}}" target="_blank" class="btn git-fill btn-block hvr-icon-bob">
+                    <i class="fab fa-github hvr-icon"></i>&nbsp;&nbsp;&nbsp;View this Collection on Github </a>
+                </div>
+              </div>
+
+
+            </div>
+          </div>
+        
+        </div>
+        
+
+      </div>
+
+      {% endfor %}
+    </div>
+
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  
+<script type="text/javascript">
+$(document).ready(function() {
+
+  $('#description').fadeIn();  
+    
+});
+</script>
+
+
+
+{% endblock content %}

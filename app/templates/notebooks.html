@@ -1,0 +1,82 @@
+<!-- Import Macros -->
+{% from "macros.html" import binder_button with context %} 
+{% from "macros.html" import nb_button with context %} 
+{% from "macros.html" import tag_list with context %} 
+{% from "macros.html" import sidebar with context %} 
+{% from "macros.html" import git_button with context %} 
+{% extends "layout.html" %} 
+
+<!-- Title -->
+{% block title %} All Notebooks - JOIN {% endblock %}
+
+{% block content %}
+
+
+<div class="container py-5 headings">
+
+  <!-- All notebooks heading  -->
+  <div class="row">
+    <h1 class="navy">All Notebooks</h1>
+  </div>
+</div>
+
+<!-- Container for list of notebooks, as well as sidebar  -->
+<div class="container ml-auto">
+
+  <!-- List of Notebooks  -->
+  <div class="row ">
+    <div class="col-lg-9">
+
+      <!-- Post date -->
+      {% for d in dates %}
+      <h5 class="display-4 large navy">{{d['posted']}}</h5>
+      <hr class="hr"> 
+      {% for post in posts %}
+      <!-- Only show notebooks with that specific datestamp -->
+      {% if d['posted'] == post['date_posted'] %}
+
+      <!-- Generate a row that contains the abstract  -->
+      <div class=" rounded row small" data-container="body" data-toggle="popover" data-placement="left" data-trigger="hover"
+        title="Notebook Description" data-content="{{post['abstract']}}">
+          <!-- list of notebooks  -->
+          <div class=" col-11 hvr-fade ml-5 py-3 pl-5">
+
+            <!-- Title  -->
+            <h5>
+              <a class="navy small" href="{{url_for('book', key = post['id'])}}">{{post['title']}}</a>
+            </h5>
+            
+
+            <!-- Content under each title  -->
+            <p class=" navy tiny"> Notebook Generator(s): {{post['author_names']}} </p>
+           
+
+           
+            <!-- Launch buttons  -->
+            <div class="row mb-3">
+              <!-- Binder -->
+              {{ binder_button(post['binder_url']) }}
+              <!-- Static -->
+              {{ nb_button(post['url']) }}
+              <!-- Github -->
+              {{ git_button(post['github_url'])}}
+            </div>
+
+
+            <!-- Keywords -->
+            {{ tag_list(tags, post['id']) }}
+          </div>
+      </div>
+      <hr class="tab">
+
+      {% endif %} {% endfor %} {% endfor %}
+
+
+    </div>
+      <!-- Sidebar  -->
+      {{ sidebar(top_tags) }}
+  </div>
+</div>
+
+
+{% endblock content %}

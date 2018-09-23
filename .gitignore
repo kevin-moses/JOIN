@@ -1,0 +1,13 @@
+/__pycache__
+unimportant.txt
+app/sample_notebooks.txt
+app/sample_notebooks.csv
+exec -1 SHELL/
+__pycache__/
+docker.txt
+app/static/img/t.jpg
+app/__pycache__
+.DS_Store
+issue/.DS_Store
+app/__pycache__/app.cpython-36.pyc
+package-lock.json

@@ -1,0 +1,75 @@
+<!-- Import Macros -->
+{% from "macros.html" import tag_list with context %} 
+{% from "macros.html" import sidebar with context %} 
+{% from "macros.html" import display_notebooks with context %} 
+{% extends "layout.html"%} 
+
+<!-- Title -->
+{% block title %} {{search}} - JOIN Search {% endblock %}
+
+
+{% block content %}
+
+<div class="container py-5 headings">
+
+  <!-- Search heading  -->
+  <div class="row">
+    <h1 class="navy">Search Results: {{search}}</h1>
+  </div>
+
+  <!-- Pink line -->
+  <hr class="hr">
+</div>
+
+
+{% if results %} 
+
+<!-- Container for list of notebooks, as well as sidebar  -->
+<div class="container">
+
+  <!-- List of Notebooks  -->
+  <div class="row">
+    <div class="col-9">
+      <!-- Display notebooks (macro) -->
+      {{ display_notebooks(posts) }}
+    </div>
+    {{sidebar(top_tags)}}
+  </div>
+
+
+</div>
+
+</div>
+
+{% else %}
+<div class="container"> 
+  <div class="row">
+    <div class="col-9">
+        <h3 class="navy medium pb-4">Displaying 0 of 0 results </h3>
+
+        <form action="{{ url_for('search_data')}}" method="GET"  id="home-search-form">
+            <input name="q" type="text" placeholder="Search Notebooks..." aria-label="Search"  class="form-control">
+            <button class="btn text-muted bg-transparent" type="submit"></button>
+        </form>
+
+    </div>
+    {{sidebar(top_tags)}}
+  </div>  
+
+</div>
+{% endif %}
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+  $(document).ready(function () {
+
+    // Paignation 
+    $('#pagination').twbsPagination({
+
+    });
+
+  });
+</script> {% endblock content %}

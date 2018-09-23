@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+<!-- Title -->
+{% block title %} Authors - JOIN {% endblock %}
+
+{% block content %}
+
+
+<div class="container py-5 headings">
+  <div class="row">
+    <h1 class="navy">All Authors</h1>
+  </div>
+  <hr class="hr">
+</div>
+<div class="container">
+  <div id="accordion">
+    {% for author in authors %}
+  
+    <div class="card">
+      <div class="card-header bg-navy"  id="collapse">
+        <button class="btn bg-navy" data-toggle="collapse" data-target="collapse" aria-expanded="true" aria-controls="collapse" >
+          <h4 class="mb-0 small white">
+          {{author['name']}}
+          </h4>
+        </button>
+      </div>
+    
+      <div id="collapse" class="collapse show" aria-labelledby="collapse" data-parent="#accordion">
+        <div class="card-body">
+          <small>
+          {% for p in posts %}
+          {% if p['id'] == author['id'] %}
+          <p> <a href="{{url_for('book', key=p['id'])}}" class="text-muted">{{p['title']}}</a></p> 
+          {% endif %}
+          {% endfor %}
+          </small>
+        </div>
+      </div>
+  
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+
+
+
+
+{% endblock content %}
+

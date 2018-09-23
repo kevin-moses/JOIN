@@ -1,0 +1,129 @@
+<!-- Macros -->
+{% from "macros.html" import binder_button with context %} {% from "macros.html" import nb_button with context %} {% from
+"macros.html" import tag_list with context %} {% from "macros.html" import sidebar with context %} 
+
+{% extends "layout.html"%} 
+
+<!-- Title -->
+{% block title %} {% for n in notebook %}
+  {{n['title']}} - JOIN  
+{% endfor %} {% endblock %}
+
+ {% block content %}
+<script src="https://ajax.googleapis.com/ajax/tdbs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/tdbs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<div class="container ml-auto my-2">
+    <!-- Heading - title, authors, other main info  -->
+    <div class="row pt-4">
+        <div class="col-8 ">
+            <!-- Title -->
+            {%for n in notebook%}
+            <h4><b class="purple">{{n['title']}}</b></h4>
+
+            <!-- Data -->
+            <br>
+            <p class="tiny">
+                <b>Notebook Generator(s):</b>
+                {{n['author_names']}}
+                <a href="{{url_for('authors', name = n['author_names'], id = n['author_ids'])}}"></a>
+                <br> Posted:{{n['date_posted']}} 
+                <!-- Show collection -->
+                {% if n['collection_id_fk']%}
+                <br>
+                <!-- Collection No., if available  -->
+                <a class="btn btn-sm bg-purple text-warning mt-3" href="{{url_for('collection_template', key=n['collection_id_fk'])}}">
+                    Collection No.{{n['collection_id_fk']}}
+                </a>
+                <p class="tiny"> <b>Citation:</b> {{n['citation']}}</p>
+                {% endif %} {% endfor %}
+
+            </p>
+        </div>
+        <!-- share icons -->
+        <div class="col-4">
+            <div class="card">
+                <h5 class="card-header bg-navy white light pt-3" style="text-align: center">Share this Notebook:</h5>
+                <div class="card-body">
+                    <!-- Twitter -->
+                    <a href="http://twitter.com/share?url={{page}}&text={%for n in notebook%}{{n['title']}}{% endfor %}
+                                                &via=JOIN" target="_blank">
+                        <i class="fab fa-2x fa-twitter twitter"></i>
+                    </a>
+
+                    <!-- Google Plus -->
+                    <a href="https://plus.google.com/share?url={{page}}" target="_blank" class="share-btn px-4 ml-3 google-plus">
+                        <i class="fab fa-2x fa-google-plus"></i>
+                    </a>
+                    <!-- Facebook -->
+                    <a href="http://www.facebook.com/sharer/sharer.php?u={{page}}" target="_blank" class="share-btn px-4 ml-3 facebook">
+                        <i class="fab fa-2x fa-facebook-f"></i>
+                    </a>
+                    <!-- Email -->
+                    <a href="mailto:?subject={%for n in notebook%}{{n['title']}}{% endfor %}&body={%for n in notebook%}{{n['abstract']}}{% endfor %}"
+                        target="_blank" class="share-btn px-4 ml-3 email">
+                        <i class="far fa-2x fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Tabs with abstract, info, and iframe -->
+    <div class="row ">
+        <div class="col-8">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link tiny active" style="color:black" id="abstract-tab" data-toggle="tab" href="#abstract" role="tab" aria-controls="abstract"
+                        aria-selected="true">Notebook Description</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" style="color:black" id="info-tab" data-toggle="tab" href="#info" role="tab" aria-controls="info" aria-selected="false">Info/Metrics</a>
+                </li> -->
+                <li class="nav-item">
+                    {% for n in notebook %}
+                    <a class="nav-link tiny hvr-icon-back" style="color:green;" id="read-tab" href="{{n['url']}}" target="_blank" role="tab" aria-controls="read"
+                        aria-selected="false">
+                        <i class="fas fa-book hvr-icon"></i>&nbsp;Read with nbViewer </a>
+                    {% endfor %}
+                </li>
+                <li class="nav-item">
+                    {% for n in notebook %} {% if n['binder_url'] %}
+                    <a class="nav-link tiny hvr-icon-float-away" style="color:#FF8800;" id="launch-tab" href="{{n['binder_url']}}" target="_blank" role="tab"
+                        aria-controls="launch" aria-selected="false">
+                        <i class="fas fa-rocket hvr-icon"></i>&nbsp; Launch with Binder</a>
+                    {% endif %} {% endfor %}
+                </li>
+                <li class="nav-item">
+                    {% for n in notebook %} {% if n['github_url'] %}
+                    <a class="nav-link tiny hvr-icon-bob" style="color:BLACK;" id="view-tab" href="{{n['github_url']}}" target="_blank" role="tab"
+                        aria-controls="view" aria-selected="false">
+                        <i class="fab fa-github hvr-icon"></i>&nbsp;View on Github</a>
+                    {% endif %} {% endfor %}
+                </li>
+            </ul>
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade show active" id="abstract" role="tabpanel" aria-labelledby="abstract-tab">
+                    {% for n in notebook %}
+                    <br> {{n['abstract']}} {% endfor %}
+                </div>
+                <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab"></div>
+
+            </div>
+        </div>
+        <!-- Sidebar -->
+        <div class="col-4">
+            <div class="panel rounded py-3">
+                <h4 class="medium px-sm-3 extra-bold purple mb-0" style="text-align: center"> Top Tags </h4>
+                {% for t in top_tags %}
+                <br>
+                <a href="{{url_for('subject', key = t['keyword']) }}" class="badge badge-pill tag-text mx-sm-4 px-sm-auto my-1 hvr-backward"
+                    style="border:2px solid {{t['color']}}">{{t['keyword']}}</a>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock content %}
